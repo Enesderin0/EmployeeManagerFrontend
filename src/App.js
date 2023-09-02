@@ -1,7 +1,7 @@
 // import axios from "axios";
 import "./App.css";
 
-import React, { useState } from "react";
+import React from "react";
 import EmployeeDetail from "./components/EmployeeDetail";
 import Header from "./components/Header";
 import AddEmployee from "./components/AddEmployee";
@@ -9,7 +9,6 @@ import ListEmployees from "./components/ListEmployees";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  const [activeEmployeeId, setActiveEmployeeId] = useState(null);
 
   return (
     <BrowserRouter>
@@ -17,11 +16,11 @@ function App() {
         <Route index element={<Header />} />
         <Route
           path="employees"
-          element={<ListEmployees setActiveEmployeeId={setActiveEmployeeId} />}
+          element={<ListEmployees/>}
         />
         <Route
-          path="employee"
-          element={<EmployeeDetail activeEmployeeId={activeEmployeeId} />}
+          path='employees/:id'
+          element={<EmployeeDetail/>}
         />
         <Route path="add-employee" element={<AddEmployee />} />
       </Routes>

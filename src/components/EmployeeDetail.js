@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
-function EmployeeDetail({ activeEmployeeId }) {
-  const [employee, setEmployee] = useState([]);
+
+function EmployeeDetail() {
+  const { id } = useParams();
+  const location=useLocation();
+  const [employee, setEmployee] = useState([location.state]);
 
   useEffect(() => {
-    axios(`http://localhost:8081/employee/${activeEmployeeId}`)
+
+    if(!employee?.id){
+      axios(`http://localhost:8081/employees/${id}`)
       .then((res) => setEmployee(res.data))
       .catch((error) => console.log(error));
-  }, [activeEmployeeId]);
+    }
+  }, [id,employee]);
+  console.log(location.state)
 
   return (
     <div>
       <h3>Employee Details</h3>
-      {activeEmployeeId && (
-        <>
-          <div>{employee.name}</div>
-          <div>{employee.surname}</div>
-          <div>{employee.price}</div>
-          <div>{employee.department}</div>
-        </>
-      )}
+
+      <div>{employee.name}</div>
+      <div>{employee.surname}</div>
+      <div>{employee.price}</div>
+      <div>{employee.department}</div>
+      {/* <Link to={`/employees/${Number(id)+1}`}> bir sonraki </Link> */}
     </div>
   );
 }

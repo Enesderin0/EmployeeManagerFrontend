@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "antd";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function ListEmployees({setActiveEmployeeId}) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios("http://localhost:8081/employee")
+    axios("http://localhost:8081/employees")
       .then((res) => setData(res.data))
       .catch((error) => {
         console.log("Error : " + error);
@@ -29,8 +30,8 @@ function ListEmployees({setActiveEmployeeId}) {
 
             <ul>
               {data.map((e) => {
-                return <li key={e.id}onClick={()=>setActiveEmployeeId(e.id)}>
-                  <h3 style={{display:"inline"}}>{e.name} {e.surname}  </h3>
+                return <li key={e.id}>
+                  <Link to={`${e.id}`} state={e} style={{display:"inline"}}>{e.name} {e.surname}  </Link>
                   <span>{e.department}</span>
                 </li>;
               })}
